@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerInventoryController : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class PlayerInventoryController : MonoBehaviour
 
     [SerializeField]
     public InventoryItem secondTestItem;
+
+    [SerializeField] 
+    private GameObject inventoryUIRoot;
 
     private void Start()
     {
@@ -37,4 +41,12 @@ public class PlayerInventoryController : MonoBehaviour
     }
 
     public Inventory GetInventory() => inventory;
+
+    void Update()
+    {
+        if (Keyboard.current.tabKey.wasPressedThisFrame)
+        {
+            inventoryUIRoot.SetActive(!inventoryUIRoot.activeSelf);
+        }
+    }
 }

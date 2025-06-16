@@ -6,12 +6,13 @@ public class InventorySlotUI : MonoBehaviour
 {
     [SerializeField] private Image iconImage;
     [SerializeField] private TextMeshProUGUI quantityText;
+    [SerializeField] private Sprite emptySlotIcon;
 
     public void SetSlot(InventorySlot slot)
     {
         if (slot.isSlotEmpty())
         {
-            iconImage.enabled = false;
+            iconImage.sprite = emptySlotIcon;
             quantityText.text = "";
         }
         else

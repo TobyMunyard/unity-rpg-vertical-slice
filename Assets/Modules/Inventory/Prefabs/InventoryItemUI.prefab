@@ -137,6 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iconImage: {fileID: 7911705818985472158}
   quantityText: {fileID: 7269661449394292656}
+  emptySlotIcon: {fileID: 1615227260, guid: 11f0ccc02f10b1b49add7ff42f9fb895, type: 3}
 --- !u!114 &-8030382461930146306
 MonoBehaviour:
   m_ObjectHideFlags: 0
