@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd242dc80d4aa1b49b17103bbee19030, type: 3}
-  m_Name: HealthPotion
+  m_Name: Sword
   m_EditorClassIdentifier: 
-  itemID: 1
-  displayName: Health Potion
-  description: Red liquid sloshes inside, it will restore health when consumed.
-  icon: {fileID: -1889220056, guid: 11f0ccc02f10b1b49add7ff42f9fb895, type: 3}
-  isStackable: 1
-  maxStackSize: 10
+  itemID: 2
+  displayName: Iron Sword
+  description: A sharp blade forged from iron.
+  icon: {fileID: -458573455, guid: 11f0ccc02f10b1b49add7ff42f9fb895, type: 3}
+  isStackable: 0
+  maxStackSize: 1
