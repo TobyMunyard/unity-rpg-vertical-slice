@@ -25,6 +25,7 @@ public class PlayerInventoryController : MonoBehaviour
     private void Start()
     {
         inventory = new Inventory(20); // CHANGE INVENTORY SIZE HERE
+        inventoryUI.SetInventory(inventory);
         inventoryUI.Refresh(inventory);
 
         // TEMP: Add test item
