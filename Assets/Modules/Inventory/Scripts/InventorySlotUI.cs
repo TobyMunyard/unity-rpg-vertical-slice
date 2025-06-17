@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// UI wrapper for InventorySlot objects. If a slot is empty it will show an 
 /// empty slot icon, otherwise it will show the icon of the item in the slot.
 /// </summary>
-public class InventorySlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class InventorySlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField]
     [Tooltip("The image of an item to be displayed on the UI.")]
@@ -87,5 +87,21 @@ public class InventorySlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         if (originSlot == null || originSlot == this) return;
 
         inventoryUI.OnDropRequest(originSlot.slotIndex, this.slotIndex);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (!slotData.isSlotEmpty())
+        {
+            Debug.Log(slotData.item);
+            Vector3 tooltipPos = Input.mousePosition + new Vector3(300, -100, 0);
+            TooltipUI.Instance.ShowTooltip(slotData.item, tooltipPos);
+            //TooltipUI.Instance.ShowTooltip(slotData.item, transform.position);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        TooltipUI.Instance.HideTooltip();
     }
 }
