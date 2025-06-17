@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Oversees the interactions with Inventory and ensures UI stays in line with underlying representation.
+/// </summary>
 public class PlayerInventoryController : MonoBehaviour
 {
     public InventoryUI inventoryUI;
@@ -13,9 +16,12 @@ public class PlayerInventoryController : MonoBehaviour
     [SerializeField]
     public InventoryItem secondTestItem;
 
-    [SerializeField] 
+    [SerializeField]
     private GameObject inventoryUIRoot;
 
+    /// <summary>
+    /// Initializes the underlying inventory, add any test items here.
+    /// </summary>
     private void Start()
     {
         inventory = new Inventory(20); // CHANGE INVENTORY SIZE HERE
@@ -32,6 +38,9 @@ public class PlayerInventoryController : MonoBehaviour
         inventoryUI.Refresh(inventory);
     }
 
+    /// <summary>
+    /// Decoupled method for adding items to the underlying inventory representation.
+    /// </summary>
     public void AddItem(InventoryItem item, int quantity)
     {
         if (inventory.TryAddItem(item, quantity))
@@ -40,8 +49,14 @@ public class PlayerInventoryController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Gets the underlying Inventory class.
+    /// </summary>
     public Inventory GetInventory() => inventory;
 
+    /// <summary>
+    /// Checks each frame if the player is trying to open or close their inventory.
+    /// </summary>
     void Update()
     {
         if (Keyboard.current.tabKey.wasPressedThisFrame)
