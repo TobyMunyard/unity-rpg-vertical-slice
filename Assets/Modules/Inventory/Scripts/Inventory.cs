@@ -13,7 +13,8 @@ public class Inventory
     /// <summary>
     /// Initializes the player inventory with size slots.
     /// </summary>
-    public Inventory(int size) {
+    public Inventory(int size)
+    {
         slots = new InventorySlot[size];
         for (int i = 0; i < size; i++)
         {
@@ -123,9 +124,25 @@ public class Inventory
         return true;
     }
 
+    /// <summary>
+    /// Returns the inventory instance.
+    /// </summary>
     public Inventory GetInventory()
     {
         return this;
     }
+
+    /// <summary>
+    /// Sets the item and quantity of the given slot/index.
+    /// </summary>
+    public void SetSlot(int index, InventoryItem item, int quantity)
+    {
+        if (index >= 0 && index < slots.Length)
+        {
+            slots[index].item = item;
+            slots[index].quantity = quantity;
+        }
+    }
+
 
 }

@@ -31,11 +31,12 @@ public class PlayerInventoryController : MonoBehaviour
         // TEMP: Add test item
         for (int i = 0; i < 10; i++)
         {
-            inventory.TryAddItem(testItem, 1);
+            inventory.TryAddItem(ScriptableObject.Instantiate(testItem), 1);
         }
         inventoryUI.Refresh(inventory);
 
-        inventory.TryAddItem(secondTestItem, 2);
+        inventory.TryAddItem(ScriptableObject.Instantiate(secondTestItem), 1);
+
         inventoryUI.Refresh(inventory);
     }
 
@@ -44,7 +45,7 @@ public class PlayerInventoryController : MonoBehaviour
     /// </summary>
     public void AddItem(InventoryItem item, int quantity)
     {
-        if (inventory.TryAddItem(item, quantity))
+        if (inventory.TryAddItem(ScriptableObject.Instantiate(item), quantity))
         {
             inventoryUI.Refresh(inventory);
         }
