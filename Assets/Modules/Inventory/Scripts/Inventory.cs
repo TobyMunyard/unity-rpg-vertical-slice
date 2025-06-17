@@ -123,4 +123,9 @@ public class Inventory
         return true;
     }
 
+    public Inventory GetInventory()
+    {
+        return this;
+    }
+
 }

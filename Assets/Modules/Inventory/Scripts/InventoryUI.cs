@@ -83,4 +83,6 @@ public class InventoryUI : MonoBehaviour
         if (moved)
             RefreshAllSlots();
     }
+
+    public Inventory GetInventory() { return inventory; }
 }
