@@ -64,6 +64,11 @@ public class PlayerInventoryController : MonoBehaviour
         if (Keyboard.current.tabKey.wasPressedThisFrame)
         {
             inventoryUIRoot.SetActive(!inventoryUIRoot.activeSelf);
+            // Turn the tooltip off if the inventory is closed
+            if (!inventoryUIRoot.activeSelf)
+            {
+                TooltipUI.Instance.HideTooltip();
+            }
         }
     }
 }

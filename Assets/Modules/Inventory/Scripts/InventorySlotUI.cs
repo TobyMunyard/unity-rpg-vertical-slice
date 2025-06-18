@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -21,6 +22,9 @@ public class InventorySlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHan
     private InventorySlot slotData;
     public InventoryUI inventoryUI;
     public int slotIndex;
+
+    private float timeBeforeTooltipDisplay = 0.5f;
+    private Coroutine tooltipCoroutine;
 
     /// <summary>
     /// Sets the content of the item slot in the UI to match the underlying slot.
@@ -91,17 +95,25 @@ public class InventorySlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!slotData.isSlotEmpty())
-        {
-            Debug.Log(slotData.item);
-            Vector3 tooltipPos = Input.mousePosition + new Vector3(300, -100, 0);
-            TooltipUI.Instance.ShowTooltip(slotData.item, tooltipPos);
-            //TooltipUI.Instance.ShowTooltip(slotData.item, transform.position);
-        }
+        tooltipCoroutine = StartCoroutine(WaitCoroutine());
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (tooltipCoroutine != null)
+        {
+            StopCoroutine(tooltipCoroutine);
+            tooltipCoroutine = null;
+        }
         TooltipUI.Instance.HideTooltip();
+    }
+
+    IEnumerator WaitCoroutine()
+    {
+        yield return new WaitForSeconds(timeBeforeTooltipDisplay);
+        if (!slotData.isSlotEmpty())
+        {
+            TooltipUI.Instance.ShowTooltip(slotData.item);
+        }
     }
 }

@@ -470,6 +470,7 @@ GameObject:
   - component: {fileID: 550107822}
   - component: {fileID: 550107821}
   - component: {fileID: 550107820}
+  - component: {fileID: 550107823}
   m_Layer: 5
   m_Name: TooltipUI
   m_TagString: Untagged
@@ -551,6 +552,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 550107818}
   m_CullTransparentMesh: 1
+--- !u!225 &550107823
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 550107818}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!43 &596652470
 Mesh:
   m_ObjectHideFlags: 0
