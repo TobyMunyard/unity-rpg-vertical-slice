@@ -7,14 +7,15 @@ using UnityEngine;
 public class PatrolState : AIState
 {
     private int currentWaypoint = 0;
-    private Transform[] waypoints; // Set in Enter, gets waypoints from empty game object "Waypoints"
+    private Transform[] waypoints;
+
+    public PatrolState(Transform[] waypoints)
+    {
+        this.waypoints = waypoints;
+    }
 
     public override void Enter(AIAgent agent)
-    {
-        // Get the waypoint game object and all its children (the actual waypoints)
-        waypoints = GameObject.Find("Waypoints")
-                    .GetComponentsInChildren<Transform>()
-                    .Where(t => t != t.parent).ToArray(); 
+    { 
         // Then navigate to the first waypoint
         agent.navAgent.SetDestination(waypoints[currentWaypoint].position);
     }
@@ -31,7 +32,7 @@ public class PatrolState : AIState
         // Detect target if they are within range
         if (Vector3.Distance(agent.transform.position, agent.target.position) < 10f)
         {
-            agent.ChangeState(new ChaseState());
+            agent.ChangeState(new ChaseState(waypoints));
         }
     }
 

@@ -9,6 +9,13 @@ public class AttackState : AIState
     [SerializeField ]private float attackCooldown = 1.5f;
     private float nextAttackTime = 0f;
 
+    private Transform[] patrolStateWaypoints;
+
+    public AttackState(Transform[] patrolStateWaypoints)
+    {
+        this.patrolStateWaypoints = patrolStateWaypoints;
+    }
+
     public override void Enter(AIAgent agent)
     {
         // Stop moving so you can begin attacking
@@ -29,7 +36,7 @@ public class AttackState : AIState
         {
             // If target is too far away to attack then go back to chasing
             agent.navAgent.isStopped = false;
-            agent.ChangeState(new ChaseState());
+            agent.ChangeState(new ChaseState(patrolStateWaypoints));
         }
     }
 

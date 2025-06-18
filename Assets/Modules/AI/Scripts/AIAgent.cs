@@ -8,6 +8,7 @@ public class AIAgent : MonoBehaviour
 {
     public NavMeshAgent navAgent;
     public Transform target;
+    public PatrolPath patrolPath;
 
     private AIState currentState;
 
@@ -15,7 +16,11 @@ public class AIAgent : MonoBehaviour
     {
         // Patrols by default
         navAgent = GetComponent<NavMeshAgent>();
-        ChangeState(new PatrolState());
+        if (patrolPath != null)
+        {
+            Transform[] waypoints = patrolPath.GetWaypoints();
+            ChangeState(new PatrolState(waypoints));
+        }
     }
 
     void Update()

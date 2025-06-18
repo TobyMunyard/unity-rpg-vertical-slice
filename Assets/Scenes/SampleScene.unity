@@ -176,8 +176,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 118266962}
+  - component: {fileID: 118266963}
   m_Layer: 0
-  m_Name: Waypoints
+  m_Name: PatrolPath_Enemy01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -200,6 +201,18 @@ Transform:
   - {fileID: 1975216573}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &118266963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118266961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e22a689b07015d44c95d765850cc9c76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -2761,6 +2774,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navAgent: {fileID: 8019369018411260523}
   target: {fileID: 1204576894}
+  patrolPath: {fileID: 118266963}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

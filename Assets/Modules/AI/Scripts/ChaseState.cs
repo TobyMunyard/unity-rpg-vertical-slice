@@ -6,6 +6,13 @@ using UnityEngine;
 /// </summary>
 public class ChaseState : AIState
 {
+    private Transform[] patrolStateWaypoints;
+
+    public ChaseState(Transform[] patrolStateWaypoints)
+    {
+        this.patrolStateWaypoints = patrolStateWaypoints;
+    }
+
     public override void Enter(AIAgent agent)
     {
         agent.navAgent.speed = 4.5f;
@@ -20,12 +27,12 @@ public class ChaseState : AIState
         if (dist > 15f)
         {
             // Go back to patrolling if the target gets too far away
-            agent.ChangeState(new PatrolState());
+            agent.ChangeState(new PatrolState(patrolStateWaypoints));
         }
         else if (dist <= 2f)
         {
             // If very close to the target begin attacking
-            agent.ChangeState(new AttackState());
+            agent.ChangeState(new AttackState(patrolStateWaypoints));
         }
     }
 
