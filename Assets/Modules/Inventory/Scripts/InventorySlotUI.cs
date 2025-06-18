@@ -25,6 +25,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
     private float timeBeforeTooltipDisplay = 0.5f;
     private Coroutine tooltipCoroutine;
+    private static InventorySlotUI currentHoveredSlot = null;
 
     /// <summary>
     /// Sets the content of the item slot in the UI to match the underlying slot.
@@ -95,25 +96,44 @@ public class InventorySlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        Debug.Log("OnPointerEnter");
+        currentHoveredSlot = this;
+
+        if (tooltipCoroutine != null)
+            StopCoroutine(tooltipCoroutine);
+
         tooltipCoroutine = StartCoroutine(WaitCoroutine());
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        Debug.Log("OnPointerExit");
         if (tooltipCoroutine != null)
         {
             StopCoroutine(tooltipCoroutine);
             tooltipCoroutine = null;
         }
-        TooltipUI.Instance.HideTooltip();
+
+        if (currentHoveredSlot == this)
+        {
+            TooltipUI.Instance.HideTooltip();
+            currentHoveredSlot = null;
+        }
     }
 
     IEnumerator WaitCoroutine()
     {
+        Debug.Log("WaitCoroutine");
         yield return new WaitForSeconds(timeBeforeTooltipDisplay);
-        if (!slotData.isSlotEmpty())
-        {
-            TooltipUI.Instance.ShowTooltip(slotData.item);
-        }
+
+        // If cursor exited while waiting, cancel
+        if (this != currentHoveredSlot || slotData.isSlotEmpty())
+            yield break;
+
+        // If tooltip is already showing this item, don't show again
+        if (TooltipUI.Instance.IsShowing(slotData.item))
+            yield break;
+
+        TooltipUI.Instance.ShowTooltip(slotData.item);
     }
 }

@@ -11,12 +11,14 @@ public class TooltipUI : MonoBehaviour
     private GameObject tooltipPanel;
     [SerializeField]
     private TMPro.TextMeshProUGUI itemNameText;
-    [SerializeField] 
+    [SerializeField]
     private TMPro.TextMeshProUGUI descriptionText;
 
     private CanvasGroup canvasGroup;
     private Coroutine fadeCoroutine;
     private bool isVisible;
+    public bool fadeOutRunning = false;
+    private InventoryItem currentItem = null;
 
     private void Awake()
     {
@@ -37,10 +39,20 @@ public class TooltipUI : MonoBehaviour
     }
     public void ShowTooltip(InventoryItem item)
     {
+        Debug.Log("Show Tooltip");
+        if (item == null || item == currentItem)
+            return;
+
+        if (fadeOutRunning)
+        {
+            StopAllCoroutines();
+            fadeOutRunning = false;
+        }
+
+        currentItem = item;
+        tooltipPanel.SetActive(true);
         itemNameText.text = item.displayName;
         descriptionText.text = item.description;
-
-        tooltipPanel.SetActive(true);
         isVisible = true;
 
         if (fadeCoroutine != null)
@@ -52,13 +64,14 @@ public class TooltipUI : MonoBehaviour
 
     public void HideTooltip()
     {
+        Debug.Log("Hide Tooltip");
         isVisible = false;
 
         if (!gameObject.activeInHierarchy || !tooltipPanel.activeInHierarchy)
         {
-            // Don't run Coroutine if the instance is inactive
             canvasGroup.alpha = 0f;
             tooltipPanel.SetActive(false);
+            currentItem = null;
             return;
         }
 
@@ -71,6 +84,7 @@ public class TooltipUI : MonoBehaviour
 
     private IEnumerator FadeInCoroutine()
     {
+        Debug.Log("Fade in Coroutine");
         float duration = 0.15f;
         float time = 0f;
 
@@ -86,19 +100,27 @@ public class TooltipUI : MonoBehaviour
 
     private IEnumerator FadeOutCoroutine()
     {
+        Debug.Log("Fade out Coroutine");
         float duration = 0.15f;
         float time = 0f;
 
         while (time < duration)
         {
+            fadeOutRunning = true;
             canvasGroup.alpha = Mathf.Lerp(1f, 0f, time / duration);
             time += Time.deltaTime;
             yield return null;
         }
 
+        fadeOutRunning = false;
         canvasGroup.alpha = 0f;
         tooltipPanel.SetActive(false);
+        currentItem = null;
     }
 
+    public bool IsShowing(InventoryItem item)
+    {
+        return isVisible && currentItem == item;
+    }
 
 }
