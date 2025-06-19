@@ -13,6 +13,8 @@ public class AIAgent : MonoBehaviour
 
     private AIState currentState;
 
+    public Animator animator;
+
     void Start()
     {
         // Patrols by default

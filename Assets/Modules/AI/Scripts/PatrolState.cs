@@ -27,6 +27,9 @@ public class PatrolState : AIState
 
     public override void Update(AIAgent agent)
     {
+        bool isMoving = agent.navAgent.velocity.magnitude > 0.1f;
+        agent.animator.SetBool("IsWalking", isMoving);
+
         if (isWaiting)
         {
             waitTimer += Time.deltaTime;
