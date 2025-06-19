@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,6 +10,9 @@ public class PatrolState : AIState
 {
     private int currentWaypoint = 0;
     private Transform[] waypoints;
+    private bool isWaiting = false;
+    private float waitDuration = 0f;
+    private float waitTimer = 0f;
 
     public PatrolState(Transform[] waypoints)
     {
@@ -16,18 +20,32 @@ public class PatrolState : AIState
     }
 
     public override void Enter(AIAgent agent)
-    { 
+    {
         // Then navigate to the first waypoint
         agent.navAgent.SetDestination(waypoints[currentWaypoint].position);
     }
 
     public override void Update(AIAgent agent)
     {
+        if (isWaiting)
+        {
+            waitTimer += Time.deltaTime;
+            if (waitTimer >= waitDuration)
+            {
+                isWaiting = false;
+                agent.navAgent.SetDestination(waypoints[currentWaypoint].position);
+                agent.navAgent.isStopped = false;
+            }
+            return; // Skip rest of logic while waiting
+        }
+
         if (!agent.navAgent.pathPending && agent.navAgent.remainingDistance < 0.5f)
         {
-            // Move to the next waypoint, uses the modulo operator to loop infinitely between the waypoints
             currentWaypoint = (currentWaypoint + 1) % waypoints.Length;
-            agent.navAgent.SetDestination(waypoints[currentWaypoint].position);
+            isWaiting = true;
+            waitDuration = Random.Range(3f, 10f);
+            waitTimer = 0f;
+            agent.navAgent.isStopped = true; // Stops "micro-movement" apparently
         }
 
         // Detect target if they are within range
@@ -52,5 +70,8 @@ public class PatrolState : AIState
 
     }
 
-    public override void Exit(AIAgent agent) { }
+    public override void Exit(AIAgent agent)
+    {
+        agent.navAgent.isStopped = false;
+    }
 }

@@ -50,4 +50,5 @@ public class AIAgent : MonoBehaviour
         Gizmos.DrawLine(transform.position, transform.position + left * stats.detectionRange);
         Gizmos.DrawLine(transform.position, transform.position + right * stats.detectionRange);
     }
+
 }
