@@ -1406,6 +1406,7 @@ GameObject:
   - component: {fileID: 1204576899}
   - component: {fileID: 1204576901}
   - component: {fileID: 1204576902}
+  - component: {fileID: 1204576903}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1668,6 +1669,19 @@ MonoBehaviour:
   coneAngle: 45
   rayCount: 9
   inventoryController: {fileID: 11783096}
+--- !u!114 &1204576903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204576893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c72dca7c6e53f943b9193a38ebbc378, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
 --- !u!1 &1210197419
 GameObject:
   m_ObjectHideFlags: 0

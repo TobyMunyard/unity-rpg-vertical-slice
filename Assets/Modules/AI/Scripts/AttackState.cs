@@ -29,6 +29,9 @@ public class AttackState : AIState
             // If cooldown has passed attack the target
             Debug.Log("Enemy attack");
             nextAttackTime = Time.time + attackCooldown;
+            // PLAY SOME ANIMATION
+            agent.target.GetComponent<PlayerStats>().health -= agent.stats.damagePerHit;
+            Debug.Log("Player health: " + agent.target.GetComponent<PlayerStats>().health);
         }
 
         float dist = Vector3.Distance(agent.transform.position, agent.target.position);

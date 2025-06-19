@@ -34,21 +34,18 @@ public class PatrolState : AIState
             {
                 isWaiting = false;
                 agent.navAgent.SetDestination(waypoints[currentWaypoint].position);
-                agent.navAgent.isStopped = false;
             }
-            return; // Skip rest of logic while waiting
         }
-
-        if (!agent.navAgent.pathPending && agent.navAgent.remainingDistance < 0.5f)
+        else if (!agent.navAgent.pathPending && agent.navAgent.remainingDistance < 0.5f)
         {
             currentWaypoint = (currentWaypoint + 1) % waypoints.Length;
             isWaiting = true;
             waitDuration = Random.Range(3f, 10f);
             waitTimer = 0f;
-            agent.navAgent.isStopped = true; // Stops "micro-movement" apparently
+            agent.navAgent.velocity = Vector3.zero;
         }
 
-        // Detect target if they are within range
+        // FOV check should always happen
         Vector3 origin = agent.transform.position + Vector3.up * 1.5f;
         Vector3 directionToTarget = (agent.target.position - origin).normalized;
         float distanceToTarget = Vector3.Distance(origin, agent.target.position);
@@ -68,10 +65,10 @@ public class PatrolState : AIState
             }
         }
 
+
     }
 
     public override void Exit(AIAgent agent)
     {
-        agent.navAgent.isStopped = false;
     }
 }
