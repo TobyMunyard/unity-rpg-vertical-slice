@@ -2775,6 +2775,7 @@ MonoBehaviour:
   navAgent: {fileID: 8019369018411260523}
   target: {fileID: 1204576894}
   patrolPath: {fileID: 118266963}
+  stats: {fileID: 11400000, guid: 15773b5df0a9ab54eb66b07f91b8042e, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

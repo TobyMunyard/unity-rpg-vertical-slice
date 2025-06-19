@@ -1,4 +1,5 @@
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -30,10 +31,25 @@ public class PatrolState : AIState
         }
 
         // Detect target if they are within range
-        if (Vector3.Distance(agent.transform.position, agent.target.position) < 10f)
+        Vector3 origin = agent.transform.position + Vector3.up * 1.5f;
+        Vector3 directionToTarget = (agent.target.position - origin).normalized;
+        float distanceToTarget = Vector3.Distance(origin, agent.target.position);
+        float angleToTarget = Vector3.Angle(agent.transform.forward, directionToTarget);
+
+        Debug.DrawRay(origin, directionToTarget * agent.stats.detectionRange, Color.yellow);
+        // Casts a angled raycast that is fieldOfView wide and detectionRange long, these are set in AIStats ScriptableObjects
+        if (distanceToTarget <= agent.stats.detectionRange && angleToTarget <= agent.stats.fieldOfView / 2f)
         {
-            agent.ChangeState(new ChaseState(waypoints));
+            if (Physics.Raycast(origin, directionToTarget, out RaycastHit hit, agent.stats.detectionRange))
+            {
+                if (hit.transform.CompareTag("Player"))
+                {
+                    Debug.Log("FOV DETECTED PLAYER");
+                    agent.ChangeState(new ChaseState(waypoints));
+                }
+            }
         }
+
     }
 
     public override void Exit(AIAgent agent) { }
