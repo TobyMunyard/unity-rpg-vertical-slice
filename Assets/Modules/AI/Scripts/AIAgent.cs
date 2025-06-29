@@ -29,6 +29,7 @@ public class AIAgent : MonoBehaviour
     void Update()
     {
         currentState?.Update(this);
+        PerformDetectionCheck();
     }
 
     public void ChangeState(AIState newState)
@@ -53,4 +54,25 @@ public class AIAgent : MonoBehaviour
         Gizmos.DrawLine(transform.position, transform.position + right * stats.detectionRange);
     }
 
+    public void PerformDetectionCheck()
+    {
+        Vector3 origin = transform.position + Vector3.up * 1.5f;
+        Vector3 directionToTarget = (target.position - origin).normalized;
+        float distanceToTarget = Vector3.Distance(origin, target.position);
+        float angleToTarget = Vector3.Angle(transform.forward, directionToTarget);
+
+        Debug.DrawRay(origin, directionToTarget * stats.detectionRange, Color.yellow);
+
+        if (distanceToTarget <= stats.detectionRange && angleToTarget <= stats.fieldOfView / 2f)
+        {
+            if (Physics.Raycast(origin, directionToTarget, out RaycastHit hit, stats.detectionRange))
+            {
+                if (hit.transform.CompareTag("Player"))
+                {
+                    Debug.Log("FOV DETECTED PLAYER");
+                    ChangeState(new ChaseState(patrolPath.GetWaypoints()));
+                }
+            }
+        }
+    }
 }
