@@ -20,6 +20,9 @@ public class ChaseState : AIState
 
     public override void Update(AIAgent agent)
     {
+        bool isMoving = agent.navAgent.velocity.magnitude > 0.1f;
+        agent.animator.SetBool("IsWalking", isMoving);
+
         // Navigate to the target
         agent.navAgent.SetDestination(agent.target.position);
 

@@ -24,12 +24,13 @@ public class AttackState : AIState
 
     public override void Update(AIAgent agent)
     {
+
         if (Time.time >= nextAttackTime)
         {
             // If cooldown has passed attack the target
             Debug.Log("Enemy attack");
             nextAttackTime = Time.time + attackCooldown;
-            // PLAY SOME ANIMATION
+            agent.animator.SetTrigger("AttackTrigger");
             agent.target.GetComponent<PlayerStats>().health -= agent.stats.damagePerHit;
             Debug.Log("Player health: " + agent.target.GetComponent<PlayerStats>().health);
         }
